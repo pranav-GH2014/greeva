@@ -1,61 +1,44 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
-    <section className="relative overflow-hidden">
-      {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-500" />
+    <div className="bg-white">
+      {/* Hero Section */}
+      <section className="relative px-6 lg:px-8 py-20 lg:py-32 flex flex-col items-center text-center">
+        <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-6xl">
+          Elevate Your Style with <span className="text-blue-600">Greeva</span>
+        </h1>
+        <p className="mt-6 text-lg leading-8 text-gray-600 max-w-2xl">
+          Minimalist adornments for the modern world. Experience the perfect blend of 
+          craftsmanship and contemporary design.
+        </p>
+        <div className="mt-10 flex items-center justify-center gap-x-6">
+          <Link
+            href="/products"
+            className="rounded-full bg-black px-8 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 transition"
+          >
+            Explore Products
+          </Link>
+          <Link href="/signup" className="text-sm font-semibold leading-6 text-gray-900">
+            Create Account <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+      </section>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-
-        {/* LEFT CONTENT */}
-        <div className="text-white">
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-            Handcrafted <br />
-            <span className="text-yellow-200">Fancy Adornments</span>
-          </h1>
-
-          <p className="mt-6 text-lg text-white/80 max-w-md">
-            Discover premium handmade materials and adornments crafted for
-            designers, decorators, and creative minds across the globe.
-          </p>
-
-          {/* Buttons */}
-          <div className="mt-8 flex gap-4">
-            <Link
-              href="/products"
-              className="bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-gray-200 transition"
-            >
-              Shop Now →
-            </Link>
-
-            <Link
-              href="/signup"
-              className="border border-white px-6 py-3 rounded-full hover:bg-white hover:text-black transition"
-            >
-              Join Us
-            </Link>
+      {/* Featured Categories */}
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <h2 className="text-2xl font-bold tracking-tight text-gray-900">Shop by Category</h2>
+        <div className="mt-6 grid grid-cols-1 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8">
+          <div className="group relative border rounded-xl p-4 hover:shadow-md transition">
+            <div className="h-60 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75">
+               {/* Placeholder for Product Image */}
+               <div className="flex h-full items-center justify-center text-gray-400">New Arrivals</div>
+            </div>
+            <h3 className="mt-4 text-sm text-gray-700 font-medium">New Arrivals</h3>
           </div>
+          {/* Add more categories here */}
         </div>
-
-        {/* RIGHT SIDE – RANDOM HANDMADE IMAGES */}
-        <div className="relative grid grid-cols-2 gap-6">
-          {[
-            "handmade jewelry",
-            "handcrafted decor",
-            "artisan craft materials",
-            "handmade embellishments",
-          ].map((query, index) => (
-            <img
-              key={index}
-              src={`https://source.unsplash.com/400x400/?${query}`}
-              alt={query}
-              className="rounded-2xl shadow-2xl hover:scale-105 transition transform"
-            />
-          ))}
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
