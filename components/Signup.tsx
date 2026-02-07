@@ -27,7 +27,8 @@ export default function Signup() {
     // 1. "Give the user the key"
     // In a real app, you'd get this token from your backend API
     Cookies.set('auth-token', 'user_logged_in_successfully', { expires: 5 / 1440 }); 
-
+// 2. FORCE the layout (Navbar) to re-run its logic
+  router.refresh();
     // 2. Send them to the protected products page
     router.push('/products');
   };

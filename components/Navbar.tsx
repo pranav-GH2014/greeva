@@ -4,16 +4,18 @@ import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const pathname = usePathname(); // This watches for URL changes
 
   // Check for the cookie when the component loads
   useEffect(() => {
     const token = Cookies.get('auth-token');
     setIsLoggedIn(!!token);
-  }, []);
+  }, [pathname]);
 
   const handleLogout = () => {
     // Remove the key and update the UI
@@ -21,7 +23,7 @@ export default function Navbar() {
     setIsLoggedIn(false);
     
     // Send them back to signup and refresh the gatekeeper
-    router.push('/signup');
+    router.push('/');
     router.refresh();
   };
 
