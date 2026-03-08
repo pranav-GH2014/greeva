@@ -1,73 +1,48 @@
-"use client";
+import { signup } from '@/app/signup/actions'
 
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { useRouter } from 'next/navigation'; // For redirecting
-import Cookies from 'js-cookie'; // For setting the "key"
-
-export default function Signup() {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    confirmPassword: ''
-  });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
-
-    // 1. "Give the user the key"
-    // In a real app, you'd get this token from your backend API
-    Cookies.set('auth-token', 'user_logged_in_successfully', { expires: 5 / 1440 }); 
-// 2. FORCE the layout (Navbar) to re-run its logic
-  router.refresh();
-    // 2. Send them to the protected products page
-    router.push('/products');
-  };
-
+export default function Signup({ searchParams }: { searchParams: { error?: string } }) {
   return (
-    <section className="flex flex-col items-center justify-center min-h-[70vh] p-4">
+    <section className="flex flex-col items-center justify-center min-h-[70vh] p-4 bg-[#FAF9F6]">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
         <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">Join Greeva</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* ... your existing inputs ... */}
+        
+        {/* Show errors from the URL if signup fails */}
+        {searchParams?.error && (
+          <p className="mb-4 p-3 bg-red-50 text-red-500 rounded-lg text-sm text-center">
+            {searchParams.error}
+          </p>
+        )}
+
+        <form action={signup} className="space-y-4">
           <input
-            type="email"
             name="email"
-            placeholder="Email"
+            type="email"
+            placeholder="Email Address"
             required
-            className="w-full p-3 rounded-lg border border-gray-200 text-black"
-            onChange={handleChange}
+            className="w-full p-3 rounded-lg border border-gray-200 text-black outline-none focus:border-blue-500"
           />
           <input
-            type="password"
             name="password"
-            placeholder="Password"
+            type="password"
+            placeholder="Create Password"
             required
-            className="w-full p-3 rounded-lg border border-gray-200 text-black"
-            onChange={handleChange}
+            className="w-full p-3 rounded-lg border border-gray-200 text-black outline-none focus:border-blue-500"
           />
           <input
-            type="password"
             name="confirmPassword"
+            type="password"
             placeholder="Confirm Password"
             required
-            className="w-full p-3 rounded-lg border border-gray-200 text-black"
-            onChange={handleChange}
+            className="w-full p-3 rounded-lg border border-gray-200 text-black outline-none focus:border-blue-500"
           />
-          <button className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition">
+          <button 
+            type="submit"
+            className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition shadow-lg"
+          >
             Create Account
           </button>
         </form>
       </div>
     </section>
-  );
+  )
 }
