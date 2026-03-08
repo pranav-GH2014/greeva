@@ -2,7 +2,7 @@
 
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
+import { createClient } from '@/utils/supabase/client';
 
 export default function Login() {
   const router = useRouter();
@@ -17,16 +17,17 @@ export default function Login() {
     e.preventDefault();
     setError("");
 
-    // In a real app, you would verify these credentials with your database/API
-    if (formData.email && formData.password) {
-      // 1. Set the key
-      Cookies.set('auth-token', 'logged_in_token', { expires: 7 });
-      
-      // 2. Sync and Redirect
+    const supabase = createClient();
+    const { error: authError } = await supabase.auth.signInWithPassword({
+      email: formData.email,
+      password: formData.password,
+    });
+
+    if (authError) {
+      setError(authError.message);
+    } else {
       router.refresh(); 
       router.push('/products');
-    } else {
-      setError("Invalid email or password");
     }
   };
 
