@@ -14,7 +14,7 @@ export default function ProductsPage() {
   const [products, setProducts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
-  const categories = ['All', 'Bangles', 'Handmade', 'Home Decor', 'Art'];
+  const categories = ['All', 'Bangles', 'Handcrafted', 'Necklaces', 'Rings'];
 
   useEffect(() => {
     async function fetchProducts() {
@@ -32,12 +32,13 @@ export default function ProductsPage() {
         } else {
           // Fallback if DB is empty for demo purposes
           setProducts(Array.from({ length: 12 }).map((_, i) => {
-            const catOptions = ['Bangles', 'Handmade', 'Home Decor', 'Art'];
+            const catOptions = ['Bangles', 'Handcrafted', 'Necklaces', 'Rings'];
+            const localImages = ['/images/gold_bangles.png', '/images/gold_ring.png', '/images/model_earrings.png', '/images/jewelry_box.png', '/images/hero_bg.png'];
             return {
               id: `demo-${i}`,
-              name: `Demo ${catOptions[i % catOptions.length]} Item`,
+              name: `Signature ${catOptions[i % catOptions.length]} Piece`,
               price: 1500 + Math.floor(Math.random() * 5000),
-              image: `https://picsum.photos/seed/greeva${i + 1}/400/400`,
+              image: localImages[i % localImages.length],
               category: catOptions[i % catOptions.length]
             };
           }));
